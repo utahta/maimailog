@@ -1,0 +1,8 @@
+require 'mechanize'
+require 'date'
+require 'maimailog/version'
+require 'maimailog/data/status'
+require 'maimailog/data/detail'
+require 'maimailog/crawler/base'
+require 'maimailog/crawler/status'
+require 'maimailog/crawler/history'
