@@ -19,7 +19,7 @@ module Maimailog
 
       def date(page)
         str = page.search('//div[@class="accordion"]/h3').text[/[\d]{4}-[\d]{2}-[\d]{2} [\d]{2}:[\d]{2}/]
-        DateTime.strptime(str, '%Y-%m-%d %H:%M')
+        DateTime.strptime("#{str} JST", '%Y-%m-%d %H:%M %Z')
       end
 
       def difficulty(page)

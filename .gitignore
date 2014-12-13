@@ -22,3 +22,6 @@ tmp
 mkmf.log
 maimailog.iml
 .idea
+vendor
+.bin
+spec/spec_config.rb
