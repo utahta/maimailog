@@ -1,6 +1,7 @@
 # Maimailog
 
 [![Gem Version](https://badge.fury.io/rb/maimailog.svg)](http://badge.fury.io/rb/maimailog)
+[![Build Status](https://travis-ci.org/utahta/maimailog.svg?branch=master)](https://travis-ci.org/utahta/maimailog)
 
 Description
 -----------
