@@ -1,0 +1,73 @@
+#!/usr/bin/env ruby
+
+require 'maimailog'
+require 'thor'
+require 'io/console'
+require 'json'
+
+class Cli < Thor
+  desc "status [OPTION]", "get maimai status"
+  option :user_id, type: :string, required: true, aliases: '-u', desc: 'maimainet user id'
+  option :password, type: :string, default: '', aliases: '-p', desc: 'maimainet password'
+  def status
+    user_id, password = parse_login_options
+
+    c = Maimailog::Crawler::Status.new
+    data = c.fetch(user_id, password)
+    puts JSON.dump({ name: data.name, rating: data.rating, rating_max: data.rating_max })
+  end
+
+  desc "history [OPTION]", "get maimai play data history"
+  option :user_id, type: :string, required: true, aliases: '-u', desc: 'maimainet user id'
+  option :password, type: :string, default: '', aliases: '-p', desc: 'maimainet password'
+  def history
+    user_id, password = parse_login_options
+
+    c = Maimailog::Crawler::History.new
+    c.login(user_id, password)
+    json = []
+    c.fetch_all do |data|
+      json << {
+        date: data.date,
+        difficulty: data.difficulty,
+        name: data.name,
+        judge: {
+          perfect: data.judge.perfect,
+          great: data.judge.great,
+          good: data.judge.good,
+          miss: data.judge.miss,
+          total: data.judge.total
+        },
+        score: {
+          rate: data.score.rate,
+          tap: data.score.tap,
+          hold: data.score.hold,
+          slide: data.score.slide,
+          break: data.score.break,
+          total: data.score.total,
+          tap_max: data.score.tap_max,
+          hold_max: data.score.hold_max,
+          slide_max: data.score.slide_max,
+          break_max: data.score.break_max,
+          total_max: data.score.total_max
+        }
+      }
+    end
+    puts json
+  end
+
+  private
+
+  def parse_login_options()
+    user_id = options[:user_id]
+    password = options[:password] || ''
+    if password.empty?
+      print "enter password: "
+      password = STDIN.noecho(&:gets).strip
+      puts ''
+    end
+    [user_id, password]
+  end
+end
+
+Cli.start(ARGV)

@@ -1,5 +1,9 @@
 # Maimailog
 
+[![Gem Version](https://badge.fury.io/rb/maimailog.svg)](http://badge.fury.io/rb/maimailog)
+
+Description
+-----------
 maimai のプレイ履歴を取得する
 
 ## Installation
